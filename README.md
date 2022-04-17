@@ -1,5 +1,5 @@
 # tatech-discord-bot
-Meu bot de discord desenvolvido em TypeScript. Ainda em desenvolvimento
+Meu bot de discord desenvolvido em NodeJS com Typescript, com a lib <a href="https://discord.js.org/#/">Discord.JS</a>. Ainda em desenvolvimento!
 
 ## Comandos ainda sendo desenvolvidos: 
 ### Repeteco:
