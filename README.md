@@ -2,10 +2,11 @@
 Meu bot de discord desenvolvido em NodeJS com Typescript, com a lib <a href="https://discord.js.org/#/">Discord.JS</a>. Ainda em desenvolvimento!
 
 ## Comandos ainda sendo desenvolvidos: 
+![image](https://user-images.githubusercontent.com/49666986/164573944-19cfaa85-6e6c-4b23-a60a-6698270ce8e4.png)
 ### Repeteco:
-![image](https://user-images.githubusercontent.com/49666986/163695099-e42ad75d-6a6c-4075-9176-1b129c9f4bdf.png)
+![image](https://user-images.githubusercontent.com/49666986/164574094-850d807a-1cfe-4381-aa35-a8df674e9eda.png)
 ### Join Voice Chat
-![image](https://user-images.githubusercontent.com/49666986/163695108-0eb0a666-3b29-411f-8a1b-c22cf5f5d10d.png)
+![image](https://user-images.githubusercontent.com/49666986/164574285-311a5e45-8520-46cc-8736-e066b707b52a.png)
 ![image](https://user-images.githubusercontent.com/49666986/163695116-08ec088f-8031-4949-8c8c-ca8a73ea4bbf.png)
 
 
