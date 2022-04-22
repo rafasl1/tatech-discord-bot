@@ -2,13 +2,16 @@ import { AnyChannel, Client, ClientOptions, DMChannel, Message, NewsChannel, Par
 import { joinVoiceChannel, createAudioPlayer, createAudioResource } from "@discordjs/voice"
 import { join } from "path";
 import { clientOptions } from "../utils/intents";
+import { SongPlayer } from "./SongPlayer";
 
 export class Bot extends Client {
     botCommandPrefix: string = "tt";
+    songPlayer: SongPlayer;
 
     constructor() {
         const options: ClientOptions = clientOptions;
         super(options);
+        this.songPlayer = new SongPlayer();
     }
 
     getSpecificChannelById(channelId: string): AnyChannel {
@@ -22,18 +25,36 @@ export class Bot extends Client {
         channel.send(message);
     }
 
-    processMessage({ content, channel } : Message): void {
+    async processMessage({ content, channel } : Message): Promise<void> {
         if(content.slice(0,2) === this.botCommandPrefix) {
-            const command = content.slice(3);
-            this.sendMessageInChannel(`O seu comando foi: ${command}?`, channel);
+
+            const contentWords = content.slice(3).split(' ');
+            const command = contentWords[0];
+            const subCommand = contentWords[1];
             
             try {
-                this[`${command}`](channel);
+                switch(command) {
+                    case 'repeteco':
+                        this.sendMessageInChannel(`📢 ${subCommand}`, channel);
+                        break;
+                    case "join": 
+                        this.join(channel);
+                        break;
+                    case "play":
+                        this.sendMessageInChannel(`🔊 Tocando a música: ${subCommand}`, channel);
+                        await this.handleSongCommand(subCommand);
+                        break;
+                    case "help":
+                        this.myMessages(channel);
+                        break;
+                    default:
+                        this.sendMessageInChannel(`Não consegui processar o seu comando 😬`, channel);
+                }
             } catch(error) {
-                this.sendMessageInChannel(`Não consegui processar o seu comando: ${command}?`, channel);
+                this.sendMessageInChannel(`Tive um erro tentanto processar o seu comando 😬 ${error}`, channel);
             }
         }
-    }
+    } 
 
     join(channel: DMChannel | PartialDMChannel | NewsChannel | TextChannel | ThreadChannel) {
         const channelToJoin = this.getSpecificChannelById(process.env.VOICE_CHANNEL_ID);
@@ -64,5 +85,18 @@ export class Bot extends Client {
         } else {
             this.sendMessageInChannel(`Não consegui entrar no seu canal :/`, channel)
         }
+    }
+    async handleSongCommand(songMessage: string) {
+        await this.songPlayer.processSongMessage(songMessage);
+    }
+
+    myMessages(channel: DMChannel | PartialDMChannel | NewsChannel | TextChannel | ThreadChannel) {
+        this.sendMessageInChannel(
+            `Olá! Eu sou o Tatech, o Bot do Rafa. Os meus comandos são:\n` +
+            `- repeteco 📢 (vou repetir o que você falar 😁)\n` +
+            `- join 🎧 (vou entrar no seu canal de voz)\n` +
+            `- play ▶️ (vou tentar tocar uma música )\n` +
+            `- help 🆘 (mando essa mensagem aqui!)`
+        , channel);
     }
 }

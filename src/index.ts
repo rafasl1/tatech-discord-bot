@@ -15,7 +15,7 @@ tatech.on("ready", () => {
 
 tatech.on("messageCreate", async message => {
     if(messageIsFromBotOrIsDM(message)) return;
-    tatech.processMessage(message);
+    await tatech.processMessage(message);
 })
 
 tatech.login(process.env.DISCORD_BOT_TOKEN);
